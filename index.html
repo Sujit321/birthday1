@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Shree!</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #0a0a2a;
+            color: #fff;
+            overflow-x: hidden;
+            height: 100vh;
+        }
+        
+        /* Night Sky Background */
+        .night-sky {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(to bottom, #0a0a2a, #1a0b33);
+            overflow: hidden;
+        }
+        
+        /* Stars */
+        .star {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+            animation: twinkle 2s infinite alternate;
+        }
+        
+        @keyframes twinkle {
+            0% { opacity: 0.3; }
+            100% { opacity: 1; }
+        }
+        
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+        
+        .hero-name {
+            font-size: 5rem;
+            font-weight: 800;
+            text-align: center;
+            color: transparent;
+            background: linear-gradient(45deg, #ff8a00, #e52e71, #8a2be2, #ff1493);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+            animation: gradient 6s ease infinite, glow 2s ease-in-out infinite alternate;
+        }
+        
+        .birthday-message {
+            font-size: 2.5rem;
+            margin-top: 1.5rem;
+            text-align: center;
+            opacity: 0;
+            animation: fadeIn 2s forwards 1s;
+        }
+        
+        /* Firework Effects */
+        .firework {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            pointer-events: none;
+            mix-blend-mode: screen;
+            opacity: 0;
+        }
+        
+        /* Gallery Section */
+        .gallery-section {
+            padding: 4rem 1rem;
+            text-align: center;
+        }
+        
+        .gallery-title {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: #e52e71;
+        }
+        
+        .gallery {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+            gap: 20px;
+            padding: 20px 0;
+        }
+        
+        .gallery-item {
+            flex: 0 0 300px;
+            height: 400px;
+            scroll-snap-align: center;
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7);
+            transition: transform 0.3s;
+        }
+        
+        .gallery-item:hover {
+            transform: scale(1.05);
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            opacity: 0;
+        }
+        
+        /* Wishes Section */
+        .wishes-section {
+            padding: 4rem 1rem;
+            text-align: center;
+        }
+        
+        .wishes-title {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: #8a2be2;
+        }
+        
+        .wishes-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+        
+        .wish-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            width: 300px;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        /* Countdown Section */
+        .countdown-section {
+            padding: 4rem 1rem;
+            text-align: center;
+        }
+        
+        .countdown-title {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #ff8a00;
+        }
+        
+        .countdown-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        
+        .countdown-box {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            padding: 15px;
+            border-radius: 10px;
+            min-width: 80px;
+        }
+        
+        .countdown-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #ff1493;
+        }
+        
+        .countdown-label {
+            font-size: 0.9rem;
+            color: #ddd;
+        }
+        
+        /* CTA Section */
+        .cta-section {
+            padding: 4rem 1rem;
+            text-align: center;
+        }
+        
+        .cta-button {
+            background: linear-gradient(45deg, #ff8a00, #e52e71);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(229, 46, 113, 0.4);
+        }
+        
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transform: rotate(45deg);
+            transition: 0.6s;
+        }
+        
+        .cta-button:hover::before {
+            left: 100%;
+        }
+        
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background: linear-gradient(135deg, #1a0b33, #0a0a2a);
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+            box-shadow: 0 0 50px rgba(138, 43, 226, 0.5);
+            animation: modalOpen 0.5s forwards;
+        }
+        
+        @keyframes modalOpen {
+            from { opacity: 0; transform: translateY(-50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.5rem;
+            color: #e52e71;
+            cursor: pointer;
+            border: none;
+            background: none;
+        }
+        
+        /* Audio Controls */
+        .audio-control {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        
+        .audio-control:hover {
+            transform: scale(1.1);
+        }
+        
+        /* Animations */
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        @keyframes glow {
+            from { text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #e52e71, 0 0 40px #e52e71; }
+            to { text-shadow: 0 0 20px #fff, 0 0 30px #ff8a00, 0 0 40px #ff8a00, 0 0 50px #ff8a00; }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .hero-name {
+                font-size: 3rem;
+            }
+            
+            .birthday-message {
+                font-size: 1.8rem;
+            }
+            
+            .gallery-item {
+                flex: 0 0 250px;
+                height: 350px;
+            }
+            
+            .countdown-container {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Night Sky Background -->
+    <div class="night-sky" id="nightSky"></div>
+    
+    <!-- Audio Control -->
+    <div class="audio-control" id="audioControl">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
+            <path d="M3,9v6h4l5,5V4L7,9H3z M16.5,12c0-1.77-1.02-3.29-2.5-4.03v8.05C15.48,15.29,16.5,13.77,16.5,12z M14,3.23v2.06 c2.89,0.86,5,3.54,5,6.71s-2.11,5.85-5,6.71v2.06c4.01-0.91,7-4.49,7-8.77S18.01,4.14,14,3.23z"/>
+        </svg>
+    </div>
+    <audio id="bgMusic" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    </audio>
+    
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1 class="hero-name">Shree</h1>
+        <p class="birthday-message">Happy Birthday!</p>
+    </section>
+    
+    <!-- Gallery Section -->
+    <section class="gallery-section">
+        <h2 class="gallery-title">Photo Memories</h2>
+        <div class="gallery" id="gallery">
+            <div class="gallery-item">
+                <img src="imag/shree1.jpg" alt="Shree" loading="lazy">
+            </div>
+            <div class="gallery-item">
+                <img src="imag/shree2.jpg" alt="Shree" loading="lazy">
+            </div>
+            <div class="gallery-item">
+                <img src="imag/shree3.jpg" alt="Shree" loading="lazy">
+            </div>
+            <div class="gallery-item">
+                <img src="imag/shree4.jpg" alt="Shree" loading="lazy">
+            </div>
+            <div class="gallery-item">
+                <img src="imag/shree5.jpg" alt="Shree" loading="lazy">
+            </div>
+        </div>
+    </section>
+    
+    <!-- Wishes Section -->
+    <section class="wishes-section">
+        <h2 class="wishes-title">Birthday Wishes</h2>
+        <div class="wishes-container" id="wishesContainer">
+            <div class="wish-card">
+                <p>"Happy birthday Shree! May your day be filled with joy and laughter!"</p>
+                <p>- Jit</p>
+            </div>
+            <div class="wish-card">
+                <p>"Wishing you the happiest of birthdays and a wonderful year ahead!"</p>
+                <p>- Jit</p>
+            </div>
+            <div class="wish-card">
+                <p>"Many happy returns of the day! May all your dreams come true."</p>
+                <p>- Jit</p>
+            </div>
+            <div class="wish-card">
+                <p>"Sending you love and best wishes on your special day!"</p>
+                <p>- Jit</p>
+            </div>
+            <div class="wish-card">
+                <p>"Happy Birthday! Hope your celebration is as fantastic as you are!"</p>
+                <p>- Jit</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Countdown Section -->
+    <section class="countdown-section" id="countdownSection">
+        <h2 class="countdown-title">Birthday Countdown</h2>
+        <div class="countdown-container" id="countdownContainer">
+            <div class="countdown-box">
+                <div class="countdown-number" id="days">00</div>
+                <div class="countdown-label">Days</div>
+            </div>
+            <div class="countdown-box">
+                <div class="countdown-number" id="hours">00</div>
+                <div class="countdown-label">Hours</div>
+            </div>
+            <div class="countdown-box">
+                <div class="countdown-number" id="minutes">00</div>
+                <div class="countdown-label">Minutes</div>
+            </div>
+            <div class="countdown-box">
+                <div class="countdown-number" id="seconds">00</div>
+                <div class="countdown-label">Seconds</div>
+            </div>
+        </div>
+        <div id="birthdayToday" style="display: none;">
+            <h2 style="font-size: 3rem; margin-top: 2rem; color: #ff1493;">Today's the Day!</h2>
+        </div>
+    </section>
+    
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <button class="cta-button" id="ctaButton">Send Your Wish to Shree</button>
+    </section>
+    
+    <!-- Modal -->
+    <div class="modal" id="wishModal">
+        <div class="modal-content">
+            <button class="close-modal" id="closeModal">&times;</button>
+            <h2 style="margin-bottom: 20px; color: #e52e71;">Send Your Birthday Wish</h2>
+            <form id="wishForm">
+                <div style="margin-bottom: 15px;">
+                    <input type="text" placeholder="Your Name" style="width: 100%; padding: 10px; border-radius: 5px; border: none; background: rgba(255,255,255,0.1); color: white;" required>
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <textarea placeholder="Your Birthday Wish for Shree" style="width: 100%; padding: 10px; border-radius: 5px; border: none; background: rgba(255,255,255,0.1); color: white; min-height: 100px;" required></textarea>
+                </div>
+                <button type="submit" style="background: linear-gradient(45deg, #8a2be2, #ff1493); color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; width: 100%;">Send Wish</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Create stars in the night sky
+        function createStars() {
+            const sky = document.getElementById('nightSky');
+            for (let i = 0; i < 200; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.width = `${Math.random() * 3}px`;
+                star.style.height = star.style.width;
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.top = `${Math.random() * 100}%`;
+                star.style.animationDelay = `${Math.random() * 2}s`;
+                sky.appendChild(star);
+            }
+        }
+        
+        // Firework animation
+        function createFirework(x, y) {
+            for (let i = 0; i < 50; i++) {
+                const firework = document.createElement('div');
+                firework.className = 'firework';
+                document.body.appendChild(firework);
+                
+                const angle = Math.random() * Math.PI * 2;
+                const speed = 1 + Math.random() * 3;
+                const size = 3 + Math.random() * 3;
+                const color = `hsl(${Math.random() * 360}, 100%, 50%)`;
+                
+                firework.style.left = `${x}px`;
+                firework.style.top = `${y}px`;
+                firework.style.backgroundColor = color;
+                firework.style.width = `${size}px`;
+                firework.style.height = `${size}px`;
+                
+                // Animate the particle
+                const dx = Math.cos(angle) * speed;
+                const dy = Math.sin(angle) * speed;
+                let opacity = 1;
+                let posX = x;
+                let posY = y;
+                
+                const animate = () => {
+                    if (opacity <= 0) {
+                        firework.remove();
+                        return;
+                    }
+                    
+                    opacity -= 0.01;
+                    posX += dx;
+                    posY += dy;
+                    
+                    firework.style.opacity = opacity;
+                    firework.style.left = `${posX}px`;
+                    firework.style.top = `${posY}px`;
+                    
+                    requestAnimationFrame(animate);
+                };
+                
+                firework.style.opacity = '1';
+                requestAnimationFrame(animate);
+            }
+        }
+        
+        // Random fireworks
+        function randomFireworks() {
+            const x = Math.random() * window.innerWidth;
+            const y = Math.random() * (window.innerHeight / 2);
+            createFirework(x, y);
+            
+            // Schedule next firework
+            setTimeout(randomFireworks, 1000 + Math.random() * 2000);
+        }
+        
+        // Animate wish cards
+        function animateWishCards() {
+            const cards = document.querySelectorAll('.wish-card');
+            cards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.style.transition = 'opacity 1s, transform 1s';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                    
+                    // Create firework effect near the card
+                    const rect = card.getBoundingClientRect();
+                    createFirework(rect.left + rect.width / 2, rect.top);
+                }, index * 800);
+            });
+        }
+        
+        // Birthday countdown
+        function updateCountdown() {
+            const now = new Date();
+            
+            // Set your birthday date here - month is 0-based (0 = January)
+            const birthday = new Date(now.getFullYear(), 5, 26); // June 26th
+            
+            // If this year's birthday has passed, set for next year
+            if (now > birthday) {
+                birthday.setFullYear(now.getFullYear() + 1);
+            }
+            
+            const diff = birthday - now;
+            
+            // Check if it's birthday today
+            const isToday = now.getDate() === birthday.getDate() && 
+                           now.getMonth() === birthday.getMonth() &&
+                           now.getFullYear() === birthday.getFullYear();
+            
+            if (isToday) {
+                document.getElementById('countdownContainer').style.display = 'none';
+                document.getElementById('birthdayToday').style.display = 'block';
+            } else {
+                // Calculate remaining time
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+                
+                // Update the countdown
+                document.getElementById('days').textContent = days.toString().padStart(2, '0');
+                document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+                document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+                document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+            }
+        }
+        
+        // Modal functionality
+        function initModal() {
+            const modal = document.getElementById('wishModal');
+            const btn = document.getElementById('ctaButton');
+            const closeBtn = document.getElementById('closeModal');
+            
+            btn.addEventListener('click', () => {
+                modal.style.display = 'flex';
+            });
+            
+            closeBtn.addEventListener('click', () => {
+                modal.style.display = 'none';
+            });
+            
+            window.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+            
+            document.getElementById('wishForm').addEventListener('submit', (e) => {
+                e.preventDefault();
+                // In a real application, you would send this data to a server
+                alert('Thank you for your wish!');
+                modal.style.display = 'none';
+            });
+        }
+        
+        // Audio control
+        function initAudio() {
+            const audio = document.getElementById('bgMusic');
+            const control = document.getElementById('audioControl');
+            let isPlaying = false;
+            
+            control.addEventListener('click', () => {
+                if (isPlaying) {
+                    audio.pause();
+                    control.innerHTML = '<svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M16.5,12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45,2.45C16.46,12.4,16.5,12.21,16.5,12z M19,12c0,0.94-0.2,1.82-0.54,2.64l1.51,1.51 C20.63,14.91,21,13.5,21,12c0-4.28-2.99-7.86-7-8.77v2.06c2.89,0.86,5,3.54,5,6.71z M4.27,3L3,4.27L7.73,9H3v6h4l5,5v-6.73l4.25,4.25 c-0.67,0.52-1.42,0.93-2.25,1.18v2.06c1.38-0.31,2.63-0.95,3.69-1.81L19.73,21L21,19.73l-9-9L4.27,3z M12,4L9.91,6.09L12,8.18V4z"/></svg>';
+                } else {
+                    audio.play();
+                    control.innerHTML = '<svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M3,9v6h4l5,5V4L7,9H3z M16.5,12c0-1.77-1.02-3.29-2.5-4.03v8.05C15.48,15.29,16.5,13.77,16.5,12z M14,3.23v2.06 c2.89,0.86,5,3.54,5,6.71s-2.11,5.85-5,6.71v2.06c4.01-0.91,7-4.49,7-8.77S18.01,4.14,14,3.23z"/></svg>';
+                }
+                isPlaying = !isPlaying;
+            });
+        }
+        
+        // Initialize everything when the page loads
+        window.onload = function() {
+            createStars();
+            randomFireworks();
+            animateWishCards();
+            updateCountdown();
+            setInterval(updateCountdown, 1000);
+            initModal();
+            initAudio();
+            
+            // Add event listeners for fireworks on name click
+            document.querySelector('.hero-name').addEventListener('click', (e) => {
+                createFirework(e.clientX, e.clientY);
+            });
+            
+            // Add confetti to gallery items
+            document.querySelectorAll('.gallery-item').forEach(item => {
+                item.addEventListener('mouseenter', () => {
+                    const rect = item.getBoundingClientRect();
+                    createFirework(rect.left + rect.width / 2, rect.top + rect.height / 2);
+                });
+            });
+        };
+    </script>
+</body>
+</html>
